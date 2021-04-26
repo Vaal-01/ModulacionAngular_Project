@@ -1,5 +1,10 @@
 from tkinter import *
+from tkinter import messagebox
 from PIL import Image,ImageTk
+import graphCarrierView
+from graphics import ModulatinggraphFM
+from graphics import ModulatinggraphPM
+from graphics import Carriergraph
 import random
 
 class mainView:
@@ -14,7 +19,7 @@ class mainView:
 
         #BACKGROUND
         self.database_frame = ImageTk.PhotoImage\
-            (file='Views\img\main_frame.png')
+            (file='img\main_frame.png')
         self.image_panel = Label(self.window,image=self.database_frame)
         self.image_panel.pack(fill='both',expand='yes')
 
@@ -63,20 +68,41 @@ class mainView:
         self.frem_label.place(x=798, y=385)
 
         self.frem_entry = Entry(self.window, relief=FLAT, bg="white", fg="#6b6a69", font=("yu gothic ui semibold", 14))
-        self.frem_entry.place(x=845, y=422, width=289)
+        self.frem_entry.place(x=845, y=425, width=289)
 
         #BUTTON
         self.submit = ImageTk.PhotoImage\
-            (file='Views\img\calculatebtn.png')
-        self.submit_button = Button(self.window,image=self.submit, relief = "flat", borderwidth=0, background="#FFE65B",activebackground="#FFE65B", cursor="hand2")
+            (file='img\calculatebtn.png')
+        self.submit_button = Button(self.window,image=self.submit, relief = "flat", borderwidth=0, background="#FFE65B",activebackground="#FFE65B", cursor="hand2", command=self.calculate)
         self.submit_button.place(x=477,y=608)
-
-
 
     def heading_color(self):
         fg = random.choice(self.color)
         self.heading.config(fg=fg)
         self.heading.after(50, self.heading_color)
+
+    def calculate(self):
+        ampc = self.ampc_entry.get()
+        frec = self.frec_entry.get()
+        ampm = self.ampm_entry.get()
+        frem = self.frem_entry.get()
+
+        #Null validation 
+        if ampc == "" or frec == "" or ampm == "" or frem == "":
+            messagebox.showerror("Incompleto", "Por favor, Ingresa todos los datos solicitados")
+        else:
+            try:
+                if float(ampc) and float(frec) and float(ampm) and float(frem): 
+                    Carriergraph(ampc,frec)
+                    ModulatinggraphFM(ampm, frem)
+                    ModulatinggraphPM(ampm,frem)
+                    win = Toplevel()
+                    graphCarrierView.graphCarrierView(win)
+                    self.window.withdraw()
+                    win.deiconify()
+                    #mostrarCalculos(ampc,frec,ampm,frem)
+            except (ValueError):
+                messagebox.showerror("Error", "Revisa que las entradas sean un números. Si tu entrada es un número decimal escribe (.) punto para separar")
 
 
 def win():
