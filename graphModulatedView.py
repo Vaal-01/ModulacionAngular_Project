@@ -2,6 +2,7 @@ from tkinter import *
 from tkinter import messagebox
 from PIL import Image,ImageTk
 import graphModulatingView
+import dataView
 import random
 
 class graphModulatedView:
@@ -37,7 +38,7 @@ class graphModulatedView:
         #BUTTON
         self.next = ImageTk.PhotoImage\
             (file='img\sbtnnext1.png')
-        self.next_button = Button(self.window,image=self.next, relief = "flat", borderwidth=0, background="#FFE65B",activebackground="#FFE65B", cursor="hand2", command=self.calculate)
+        self.next_button = Button(self.window,image=self.next, relief = "flat", borderwidth=0, background="#FFE65B",activebackground="#FFE65B", cursor="hand2", command=self.funnext)
         self.next_button.place(x=980,y=620)
 
         self.returnbtn = ImageTk.PhotoImage\
@@ -45,8 +46,18 @@ class graphModulatedView:
         self.returnbtn_button = Button(self.window,image=self.returnbtn, relief = "flat", borderwidth=0, background="#FEC667",activebackground="#FEC667", cursor="hand2", command=self.funreturn)
         self.returnbtn_button.place(x=5,y=620)
 
-    def calculate(self):
-        messagebox.showerror("Incompleto", "Por favor, Ingresa todos los datos solicitados")
+        #Exit
+        self.exit_img = ImageTk.PhotoImage \
+            (file='img\sbtnexit.png')
+        self.exit_button = Button(self.window, image=self.exit_img, relief="flat", activebackground="#FFF157", borderwidth=0, background="#FFF157", cursor="hand2", command=self.click_exit)
+        self.exit_button.place(x=1200, y=25)
+
+        
+    def funnext(self):
+        win = Toplevel()
+        dataView.dataView(win)
+        self.window.withdraw()
+        win.deiconify()
 
     def funreturn(self):
         win = Toplevel()
@@ -54,6 +65,10 @@ class graphModulatedView:
         self.window.withdraw()
         win.deiconify()
         
+    def click_exit(self):
+        ask = messagebox.askyesnocancel("Confirmación", "¿Estás seguro que quieres salir?")
+        if ask is True:
+            self.window.quit()   
 
 def win():
     window = Tk()

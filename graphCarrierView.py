@@ -2,7 +2,7 @@ from tkinter import *
 from tkinter import messagebox
 from PIL import Image,ImageTk
 import graphModulatingView
-import mainView
+import main
 import random
 
 class graphCarrierView:
@@ -46,6 +46,12 @@ class graphCarrierView:
         self.returnbtn_button = Button(self.window,image=self.returnbtn, relief = "flat", borderwidth=0, background="#FEC667",activebackground="#FEC667", cursor="hand2", command=self.funreturn)
         self.returnbtn_button.place(x=5,y=620)
 
+        #Exit
+        self.exit_img = ImageTk.PhotoImage \
+            (file='img\sbtnexit.png')
+        self.exit_button = Button(self.window, image=self.exit_img, relief="flat", activebackground="#FFF157", borderwidth=0, background="#FFF157", cursor="hand2", command=self.click_exit)
+        self.exit_button.place(x=1200, y=25)
+
     def funnext(self):
         win = Toplevel()
         graphModulatingView.graphModulatingView(win)
@@ -54,10 +60,14 @@ class graphCarrierView:
 
     def funreturn(self):
         win = Toplevel()
-        mainView.mainView(win)
+        main.main(win)
         self.window.withdraw()
         win.deiconify()
-        
+    
+    def click_exit(self):
+        ask = messagebox.askyesnocancel("Confirmación", "¿Estás seguro que quieres salir?")
+        if ask is True:
+            self.window.quit() 
 
 def win():
     window = Tk()

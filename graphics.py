@@ -77,3 +77,48 @@ def CarriergraphPM(x,y):
     plt.grid()
     plt.plot(x,y)
     plt.savefig("img/graphicPorPM.png", bbox_inches='tight')
+
+def ModulatedgraphFM(vc,fc,m,fm):
+    x = []
+    y = []
+    vc = float(vc)
+    fc = float(fc)
+    m = float(m)
+    fm = float(fm)
+    time = float(0)
+    for i in range(2000):
+        wave = float(vc * math.cos(2*math.pi*fc*time + m*math.sin(2*math.pi*fm*time)))
+        x.append(time)
+        y.append(wave)
+        time += 0.001
+    print(":2")
+    fig, ax = plt.subplots()
+    ax.set_title('Señal Modulada (Frecuencia)')
+    ax.set_xlabel('Tiempo')
+    ax.set_ylabel('Vm')    
+    plt.grid()
+    plt.plot(x,y)
+    plt.plot(x,y,'orange')
+    plt.savefig("img/graphicModFM.png", bbox_inches='tight')
+
+def ModulatedgraphPM(vc,fc,m,fm):
+    x = []
+    y = []
+    vc = float(vc)
+    fc = float(fc)
+    m = float(m)
+    fm = float(fm)
+    time = float(0)
+    for i in range(2000):
+        wave = float(vc * math.cos(2*math.pi*fc*time + m*math.cos(2*math.pi*fm*time)))
+        x.append(time)
+        y.append(wave)
+        time += 0.001
+    print(":2")
+    fig, ax = plt.subplots()
+    ax.set_title('Señal Modulada (Fase)')
+    ax.set_xlabel('Tiempo')
+    ax.set_ylabel('Vm')    
+    plt.grid()
+    plt.plot(x,y)
+    plt.savefig("img/graphicModPM.png", bbox_inches='tight')

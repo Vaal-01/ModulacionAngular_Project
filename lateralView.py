@@ -1,12 +1,15 @@
 from tkinter import *
 from tkinter import messagebox
 from PIL import Image,ImageTk
-import graphCarrierView
-import graphModulatedView
-import random
+import graphSpectrumsView
+import dataView
+from operations import getCarrierPM, getCarrierFM, getComponentsFM, getComponentsPM, getLateralFM, getLateralPM
 
-class graphModulatingView:
+
+class lateralView:
+
     def __init__(self,window):
+
         #Format Window
         self.window = window
         self.window.geometry("1280x720+0+0")
@@ -17,23 +20,35 @@ class graphModulatingView:
 
         #BACKGROUND
         self.database_frame = ImageTk.PhotoImage\
-            (file='img\graphsmodra_frame.png')
+            (file='img\lateral_frame.png')
         self.image_panel = Label(self.window,image=self.database_frame)
         self.image_panel.pack(fill='both',expand='yes')
 
         #LABELS
 
-        #Signal FM
-        self.graph1 = ImageTk.PhotoImage\
-            (file='img\graphicModraFM.png')
-        self.graph1_label = Label(self.window,image= self.graph1,bg="white",fg="#353534",font=("yu gothic ui", 18, "bold"))
-        self.graph1_label.place(x=25, y=145)
+        #Components FM 
+        self.comf_label = Label(self.window, text=getComponentsFM(), bg="white", fg="#353534",font=("yu gothic ui", 18, "bold"))
+        self.comf_label.place(x=172, y=278)
 
-        #Signal PM
-        self.graph2 = ImageTk.PhotoImage\
-            (file='img\graphicModraPM.png')
-        self.graph2_label = Label(self.window,image= self.graph2,bg="white",fg="#353534",font=("yu gothic ui", 18, "bold"))
-        self.graph2_label.place(x=655, y=145)
+        #Components PM 
+        self.comp_label = Label(self.window, text=getComponentsPM(), bg="white", fg="#353534",font=("yu gothic ui", 18, "bold"))
+        self.comp_label.place(x=172, y=493)
+
+        #Carrier FM 
+        self.carf_label = Label(self.window, text=getCarrierFM(), bg="white", fg="#353534",font=("yu gothic ui", 18, "bold"))
+        self.carf_label.place(x=377, y=265)
+
+        #Carrier PM 
+        self.carp_label = Label(self.window, text=getCarrierPM(), bg="white", fg="#353534",font=("yu gothic ui", 18, "bold"))
+        self.carp_label.place(x=375, y=483)
+
+        #Components FM 
+        self.carf_label = Label(self.window, text=getLateralFM(), bg="white", fg="#353534",font=("yu gothic ui", 18, "bold"))
+        self.carf_label.place(x=475, y=265)
+
+        #Components PM 
+        self.carp_label = Label(self.window, text=getLateralPM(), bg="white", fg="#353534",font=("yu gothic ui", 18, "bold"))
+        self.carp_label.place(x=475, y=483)
 
         #BUTTON
         self.next = ImageTk.PhotoImage\
@@ -51,16 +66,16 @@ class graphModulatingView:
             (file='img\sbtnexit.png')
         self.exit_button = Button(self.window, image=self.exit_img, relief="flat", activebackground="#FFF157", borderwidth=0, background="#FFF157", cursor="hand2", command=self.click_exit)
         self.exit_button.place(x=1200, y=25)
-
+        
     def funnext(self):
         win = Toplevel()
-        graphModulatedView.graphModulatedView(win)
+        graphSpectrumsView.graphSpectrumsView(win)
         self.window.withdraw()
         win.deiconify()
 
     def funreturn(self):
         win = Toplevel()
-        graphCarrierView.graphCarrierView(win)
+        dataView.dataView(win)
         self.window.withdraw()
         win.deiconify()
     
@@ -71,7 +86,7 @@ class graphModulatingView:
 
 def win():
     window = Tk()
-    graphModulatingView(window)
+    lateralView(window)
     window.mainloop()
 
 if __name__ == '__main__':
